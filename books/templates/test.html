@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+ {% if similar_questions %}
+          {% for y in similar_questions %}
+            {{y}}
+          {% endfor %}
+ {% endif %}
+</body>
+</html>

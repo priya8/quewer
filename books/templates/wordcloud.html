@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+ {% block content %}
+ {% load staticfiles %}
+
+<!--Top most bar-->
+<head xmlns="http://www.w3.org/1999/html">
+<table bgcolor="red" cellpadding="100" cellspacing="15">
+  <tr>
+     <!--Name-->
+    <td class='left' style="color:#000000;">{{reviewguy}}</td>
+      <!--logout-->
+
+    <!--<td class='right'><a href="/accounts/login/" style="color:#505050 ;text-decoration: none;"> <img src="/static/img/logout.png" title="Logout" style="height:30px;width:30px;border:0;" /> </a></td>-->
+
+  </tr>
+</table>
+
+<!--CSS-->
+<style type="text/css">
+
+
+table.fixed { table-layout:fixed; }
+
+
+/* a href link CSS */
+a:link {
+    text-decoration: none;
+
+    }
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
+/* end of a href link CSS*/
+
+/* CSS for tables */
+table{
+    width: 100%;
+
+    /*this is the size of the small text's baseline over part  (≈25px*3/4)*/
+    line-height: 19.5px;
+}
+table td{
+    vertical-align: baseline;
+}
+
+/* CSS for td in tables */
+.left{
+    font-family: Ubuntu;
+    font-size: 25px;
+    text-align: left;
+    font-weight:bold;
+    background:#FFFFFF;
+
+}
+.right{
+    font-family: Ubuntu;
+    font-size: 25px;
+    text-align: right;
+    font-weight:bold;
+    background:#FFFFFF;
+}
+/* end of table CSS*/
+
+*{
+    padding: 0;
+    margin:0;
+}
+
+
+button{
+    background: linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
+    border: 1px solid #999;
+    padding: 10px 25px;
+    font-weight: bold;
+    color: rgb(77,77,77);
+    border-width: 1px 0 0 1px;
+}
+
+/* fieldset CSS */
+legend {
+  display: block;
+  margin-left: 3px;
+  padding-top: 10px;
+  text-shadow: 2px 2px 3px rgba(150, 150, 150, 0.75);
+  font-family: Ubuntu;
+  font-size:.9em;
+}
+.border {
+  border: 2px solid #B6B6B4;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.75);
+  box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.75);
+}
+.a{
+    border: none;
+    padding: 35px;
+    background: #B0B0B0 ;
+    padding-left: 180px;
+    margin: 0 auto;
+    font-family: Ubuntu;
+  }
+
+/* Q & A CSS */
+.ui{
+    background:#f1f1f1; width:66%;height: auto;padding-left:100px; padding-top:20px; margin:0 auto;padding-bottom:3 understanf 0px;
+
+}
+
+/* fieldset surrounding the q & a */
+.qa {
+    border:0px; padding:20px; margin:0px;
+    background: #B0B0B0 ;height:auto;
+    }
+/* end of Q & A CSS */
+
+/* word-cloud CSS */
+ .word-1 {
+ top: 1em;
+ font-size: 40px;
+  font-color:green;
+ text-align: center;
+ color: #626262;
+filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+-webkit-transform: rotate(190deg);
+-ms-transform: rotate(190deg);
+transform: rotate(190deg);
+
+}
+
+ .word-2 {
+ top: 0;
+ left: 1em;
+ font-size: 50px;
+color: #906060;
+text-align: right;
+font-color:yellow;
+filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+-webkit-transform: rotate(150deg);
+-ms-transform: rotate(150deg);
+transform: rotate(150deg);
+
+
+}
+
+.word-3 {
+
+ font-size: 20px;
+    font-color:pink;
+ color: pink;
+-webkit-transform: rotate(-180deg);
+-moz-transform: rotate(-180deg);
+filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+  text-align: center;
+
+}
+ .word-4 {
+ top: 1em;
+ left: 0;
+ font-size: 30px;
+ font-color:blue;
+ color: yellow;
+-webkit-transform: rotate(-200deg);
+-moz-transform: rotate(-200deg);
+filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=4);
+  text-align: center;
+  text-align:left;
+}
+
+ .word-5 {
+ top: 1.5em;
+ right: -0.3em;
+ color: green;
+ font-size: 40px;
+ font-color:orange;
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=5);
+  -webkit-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);
+  transform: rotate(3600deg);
+  text-align: center;
+
+}
+
+ .word-6 {
+ bottom: 0;
+ right: 1em;
+ color: cream;
+ font-size:50px;
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=6);
+  -webkit-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  transform: rotate(270deg);
+  text-align: right;
+
+}
+
+ .word-7 {
+ bottom: 0.6em;
+ left: 0;
+ color: #6e6e6e;
+ font-size: 60px;
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=7);
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+  text-align: left;
+}
+
+.inside {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+/* end of word-cloud CSS */
+</style>
+<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:regular,bold' rel='stylesheet' type='text/css' />
+</head>
+
+<body bgcolor="black" align="center">
+
+ {% if counts %}
+    {% for u,v in counts %}
+
+       <div class="word-{{v}}">{{u}}</div>
+
+
+    {% endfor %}
+ {% endif %}
+
+</body>
+</html>
+
+{% endblock %}

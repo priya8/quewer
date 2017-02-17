@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+
+{% block content %}
+ {% load staticfiles %}
+    <head>
+        <title> Registration</title>
+        <link rel="icon" href="/static/images/QA-Zen.jpg" type="image/jpg">
+
+     <style type="text/css">
+        .form{
+        background:#f1f1f1; width:300px; margin:0px auto; padding-left:50px; padding-top:20px; height:565px;
+        }
+        .form fieldset{border:0px; padding:0px; margin:0px;}
+        .form input[type="text"] { width: 200px; background-color:#FFFFFF;}
+        .form input[type="password"] { width: 200px; background-color:#FFFFFF;}
+        .form input.button{ background: #4b8df9; display: inline-block; padding: 5px 10px 6px; color: #fbf7f7; text-decoration: none; font-weight: bold; line-height: 1; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; -moz-box-shadow: 0 1px 3px #999; -webkit-box-shadow: 0 1px 3px #999; box-shadow: 0 1px 3px #999; text-shadow: 0 -1px 1px #222; border: none; position: relative; cursor: pointer; font-size: 14px; font-family:Ubuntu;}
+        .form input.button:hover    { background-color: #2a78f6; }
+         .form label { color: #000; font-weight:bold;font-size: 12px;font-family:Ubuntu; }
+    .form label.month {width: 135px;}
+    .form input, textarea { background-color: rgba(255, 255, 255, 0.4); border: 1px solid rgba(122, 192, 0, 0.15); padding: 7px; font-family: Keffeesatz, Arial; color: #4b4b4b; font-size: 14px; -webkit-border-radius: 5px; margin-bottom: 15px; margin-top: -10px; }
+    .form input:focus, textarea:focus { border: 1px solid #ff5400; background-color: rgba(255, 255, 255, 1); }
+     div
+      {overflow:hidden;}
+     a:link{
+      text-decoration:none;}
+     a:visited{
+      text-decoration:none;}
+     a:hover{
+      text-decoration:none;}
+     a:active{
+      text-decoration:none;}
+
+    .field_error input, .field_error select {
+        border: #FF0000 solid;
+    }
+
+    .error_message {
+         color : #ffffff;
+         }
+
+
+    .ui-datepicker {
+            width: 216px;
+            height: auto;
+            margin: 5px auto 0;
+            font: 9pt Arial, sans-serif;
+
+           color:white;
+        }
+
+
+    .ui-datepicker a  {
+                text-decoration: none;
+                 background-color: white
+                 text-color:black;
+             }
+
+
+
+
+    .ui-datepicker table {
+            width: 100%;
+           background-color:white
+
+       }
+
+
+    .ui-datepicker-header {
+
+            background-color:red ;
+            font-weight: bold;
+           color:#B80000;
+            -webkit-box-shadow: inset 0px 1px 1px 0px rgba(250, 250, 250, 2);
+            -moz-box-shadow: inset 0px 1px 1px 0px rgba(250, 250, 250, .2);
+            box-shadow: inset 0px 1px 1px 0px rgba(250, 250, 250, .2);
+            text-shadow: 1px -1px 0px #000;
+            filter: dropshadow(color=#000, offx=1, offy=-1);
+            line-height: 20px;
+
+        }
+
+
+    .ui-datepicker-title {
+             text-align: center;
+
+         }
+
+
+    .ui-datepicker-prev, .ui-datepicker-next {
+           display: inline-block;
+           width: 10px;
+           height: 10px;
+           text-align: center;
+           cursor: pointer;
+           line-height: 600%;
+           overflow: hidden;
+           background-color: red ;
+       }
+
+
+
+    .ui-datepicker-prev {
+             float: left;
+             background-position: center -30px;
+             background-color:red;
+         }
+    .ui-datepicker-next {
+             float: rightright;
+             background-position: center 0px;
+           background-color: red ;
+         }
+
+
+
+    .ui-datepicker thead {
+              background-color: white;
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', endColorstr='#f1f1f1',GradientType=0 );
+            border-bottom: 1px solid #bbb;
+           color:#B80000;
+          font-weight: bold;
+           border-color: #B80000 ;
+        }
+
+
+    .ui-datepicker th {
+           text-transform: uppercase;
+           font-size: 6pt;
+           padding: 5px 0;
+           color:#B80000;
+           text-shadow: 1px 0px 0px #fff;
+           filter: dropshadow(color=#fff, offx=1, offy=0);
+            background-color:white;
+             font-weight: bold;
+
+
+       }
+
+       .ui-datepicker tbody td {
+        padding: 5x;
+       color=#B80000;
+         font-weight: bold;
+          background-color:white;
+    }
+
+
+.navbar-default{
+
+   background: #CC3232;
+ }
+
+
+
+
+
+
+
+
+ </style>
+
+
+
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+  <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.18.custom.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.datepicker').attr("placeholder", "yyyy-mm-dd").datepicker({
+changeMonth: true,
+changeYear: true,
+ yearRange: "1950:2005" ,
+
+});
+
+});
+    </script>
+
+    </head>
+
+    <body style="margin:0">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+
+            <div class="navbar-header">
+
+                <a class="navbar-brand" href="#" style="color:#ffffff;">QA-Zen</a>
+            </div>
+
+
+
+
+                    <form id="signin" class="navbar-form navbar-right" role="form" method="post" action="/accounts/auth/">{% csrf_token %}
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user" style="color:#CC3232;"></i></span>
+
+                            <input type="text" class="form-control" name="username" id="username"
+									placeholder="Email Address" tabindex="1" value="" />
+                        </div>
+
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock" style="color:#CC3232;"></i></span>
+
+                            <input type="password" class="form-control" name="password" id="password"
+									placeholder="Password" value="" tabindex="2" />
+                        </div>
+
+                        <button type="submit" class="btn" name="Login" id="Login" style="background-color:white;color:#CC3232;" >Login</button>
+
+                   </form>
+
+        </div>
+    </nav>
+
+    <fieldset style =" background:#FFFFFF; width:100% height:100%;">
+        <div style="margin-left:0px;">
+            <!-- <img src="/static/images/QA-Zen.jpg" />-->
+        </div>
+        <div class="form" style="background:#CC3232;margin-right:0px;margin-top:0px;overflow:auto;">
+
+            <form action="/accounts/register/" method="post"> {% csrf_token %}
+
+                    {% for field in form.visible_fields %}
+                    <span {% if field.errors %}class="field_error"{% endif %}>
+                        <!--<p>{{ field.label_tag}}</p>-->
+                        {% for err in field.errors %}
+                            <span class="error_message">
+                              <p> {{ err }}</p>
+                            </span>
+                        {% endfor %}
+                        <p>{{ field }}
+
+
+                        </p>
+                    </span>
+
+                    {% endfor %}
+
+                    <button type="submit" class="btn" value="Register" name="submit" id="submit" style="background-color:white;color:#CC3232;">Register</button>
+
+
+            </form>
+        </div>
+    </fieldset>
+    </body>
+ {% endblock %}

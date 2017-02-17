@@ -1,0 +1,1076 @@
+{% extends "base.html" %}
+
+{% block content %}
+ {% load staticfiles %}
+
+    <head>
+            <title>Newsfeed</title>
+            <!--CSS-->
+            <style type="text/css">
+
+                /* a href link CSS */
+                a:link {
+                        text-decoration: none;
+                        color:CC3232;
+                }
+                a:visited {
+                        text-decoration: none;
+                        color:CC3232;
+                }
+                a:hover {
+                        color:CC3232;
+                        text-decoration: none;
+                }
+                a:active {
+                        color:CC3232;
+                        text-decoration: none;
+                }
+                /* end of a href link  CSS*/
+
+                *{
+                    padding: 0;
+                    margin:0;
+                }
+
+
+
+
+
+
+
+                .border {
+                    border: 2px solid #B6B6B4;
+                    -webkit-border-radius: 10px;
+                    -moz-border-radius: 10px;
+                    border-radius: 10px;
+                    -webkit-box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.75);
+                    -moz-box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.75);
+                    box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.75);
+                }
+                .a{
+                    border: none;
+                    padding: 35px;
+                    background: #C11B17 ;
+                    padding-left: 180px;
+                    margin: 0 auto;
+                    font-family: Ubuntu;
+                }
+
+                /* Q & A CSS */
+
+
+                /* fieldset surrounding the q & a */
+                    .qa {
+                    border:0px; padding:20px; margin:0px;
+                     background: #FFFFFF ;height:auto;
+                 }
+                /* end of Q & A CSS */
+
+
+                /*Panel(Q &A)*/
+                .panel-body {
+                background:#FFFFFF;}
+
+                .panel > .panel-heading {
+                    background-image: none;
+                    background-color: #CC3232;
+                    color: white;
+
+                }
+                .panel > .panel-footer {
+                    background-image: none;
+                    background-color: #CC3232;
+                    color: white;
+
+                }
+                /* end of Panel ( Q & A) */
+
+            /*Side menu*/
+
+                .animate {
+		-webkit-transition: all 0.3s ease-in-out;
+		-moz-transition: all 0.3s ease-in-out;
+		-o-transition: all 0.3s ease-in-out;
+		-ms-transition: all 0.3s ease-in-out;
+		transition: all 0.3s ease-in-out;
+	        }
+
+	    .navbar-fixed-left {
+		position: fixed;
+		top: 0px;
+		left: 0px;
+		border-radius: 0px;
+	    }
+
+	    .navbar-minimal {
+		width: 60px;
+		min-height: 60px;
+		max-height: 100%;
+		background-color: #CC3232;
+		background-color: #CC3232;
+		border-width: 0px;
+		z-index: 1000;
+	    }
+
+	    .navbar-minimal > .navbar-toggler {
+		position: relative;
+		min-height: 60px;
+		border-bottom: 1px solid rgb(81, 81, 81);
+		z-index: 100;
+		cursor: pointer;
+	}
+
+	    .navbar-minimal.open > .navbar-toggler,
+	    .navbar-minimal > .navbar-toggler:hover {
+		background-color:  #CC3232;
+	}
+
+	.navbar-minimal > .navbar-toggler > span {
+		position: absolute;
+		top: 50%;
+		right: 50%;
+		margin: -8px -8px 0 0;
+		width: 16px;
+		height: 16px;
+		background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE2LjIuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHdpZHRoPSIxNnB4IiBoZWlnaHQ9IjMycHgiIHZpZXdCb3g9IjAgMCAxNiAzMiIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTYgMzIiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZmlsbD0iI0ZGRkZGRiIgZD0iTTEsN2gxNGMwLjU1MiwwLDEsMC40NDgsMSwxcy0wLjQ0OCwxLTEsMUgxQzAuNDQ4LDksMCw4LjU1MiwwLDgKCVMwLjQ0OCw3LDEsN3oiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9IiNGRkZGRkYiIGQ9Ik0xLDEyaDE0YzAuNTUyLDAsMSwwLjQ0OCwxLDFzLTAuNDQ4LDEtMSwxSDFjLTAuNTUyLDAtMS0wLjQ0OC0xLTEKCVMwLjQ0OCwxMiwxLDEyeiIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZmlsbD0iI0ZGRkZGRiIgZD0iTTEsMmgxNGMwLjU1MiwwLDEsMC40NDgsMSwxcy0wLjQ0OCwxLTEsMUgxQzAuNDQ4LDQsMCwzLjU1MiwwLDMKCVMwLjQ0OCwyLDEsMnoiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9IiNGRkZGRkYiIGQ9Ik0xLjMzLDI4Ljk3bDExLjY0LTExLjY0YzAuNDU5LTAuNDU5LDEuMjA0LTAuNDU5LDEuNjYzLDAKCWMwLjQ1OSwwLjQ1OSwwLjQ1OSwxLjIwNCwwLDEuNjYzTDIuOTkzLDMwLjYzM2MtMC40NTksMC40NTktMS4yMDQsMC40NTktMS42NjMsMEMwLjg3MSwzMC4xNzQsMC44NzEsMjkuNDMsMS4zMywyOC45N3oiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9IiNGRkZGRkYiIGQ9Ik0yLjk5MywxNy4zM2wxMS42NDEsMTEuNjRjMC40NTksMC40NTksMC40NTksMS4yMDQsMCwxLjY2MwoJcy0xLjIwNCwwLjQ1OS0xLjY2MywwTDEuMzMsMTguOTkzYy0wLjQ1OS0wLjQ1OS0wLjQ1OS0xLjIwNCwwLTEuNjYzQzEuNzg5LDE2Ljg3MSwyLjUzNCwxNi44NzEsMi45OTMsMTcuMzN6Ii8+Cjwvc3ZnPgo=);
+		background-repeat: no-repeat;
+		background-position: 0 0;
+		-webkit-transition: -webkit-transform .3s ease-out 0s;
+		-moz-transition: -moz-transform .3s ease-out 0s;
+		-o-transition: -moz-transform .3s ease-out 0s;
+		-ms-transition: -ms-transform .3s ease-out 0s;
+		transition: transform .3s ease-out 0s;
+		-webkit-transform: rotate(0deg);
+		-moz-transform: rotate(0deg);
+		-o-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+
+	.navbar-minimal > .navbar-menu {
+		position: absolute;
+		top: -1000px;
+		left: 0px;
+		margin: 0px;
+		padding: 0px;
+		list-style: none;
+		z-index: 50;
+		background-color:  #CC3232;
+		background-color:  #CC3232;
+	}
+	.navbar-minimal > .navbar-menu > li {
+		margin: 0px;
+		padding: 0px;
+		border-width: 0px;
+		height: 54px;
+	}
+	.navbar-minimal > .navbar-menu > li > a {
+		position: relative;
+		display: inline-block;
+		color: rgb(255, 255, 255);
+		padding: 20px 23px;
+		text-align: left;
+		cursor: pointer;
+		border-bottom: 1px solid rgb(81, 81, 81);
+		width: 100%;
+		text-decoration: none;
+		margin: 0px;
+	}
+
+	.navbar-minimal > .navbar-menu > li > a:last-child {
+		border-bottom-width: 0px;
+	}
+	.navbar-minimal > .navbar-menu > li > a:hover {
+		background-color:  #000000;
+	}
+	.navbar-minimal > .navbar-menu > li > a > .glyphicon {
+		float: right;
+	}
+
+	.navbar-minimal.open {
+		width: 320px;
+	}
+
+	.navbar-minimal.open > .navbar-toggler > span {
+		background-position: 0 -16px;
+		-webkit-transform: rotate(-180deg);
+		-moz-transform: rotate(-180deg);
+		-o-transform: rotate(-180deg);
+		-ms-transform: rotate(-180deg);
+		transform: rotate(-180deg);
+	}
+
+	.navbar-minimal.open > .navbar-menu {
+		top: 60px;
+		width: 100%;
+		min-height: 100%;
+	}
+
+	@media (min-width: 768px) {
+		.navbar-minimal.open {
+			width: 60px;
+		}
+		.navbar-minimal.open > .navbar-menu {
+			overflow: visible;
+		}
+		.navbar-minimal > .navbar-menu > li > a > .desc {
+			position: absolute;
+			display: inline-block;
+			top: 50%;
+			left: 130px;
+			margin-top: -20px;
+			margin-left: 20px;
+			text-align: left;
+			white-space: nowrap;
+			padding: 10px 13px;
+			border-width: 0px !important;
+			background-color: rgb(51, 51, 51);
+			background-color: rgba(51, 51, 51, 0.8);
+			opacity: 0;
+		}
+		.navbar-minimal > .navbar-menu > li > a > .desc:after {
+			z-index: -1;
+			position: absolute;
+			top: 50%;
+			left: -10px;
+			margin-top: -10px;
+			content:'';
+			width: 0;
+			height: 0;
+			border-top: 10px solid transparent;
+			border-bottom: 10px solid transparent;
+			border-right: 10px solid rgb(51, 51, 51);
+			border-right-color: rgba(51, 51, 51, 0.8);
+		}
+		.navbar-minimal > .navbar-menu > li > a:hover > .desc {
+			left: 60px;
+			opacity: 1;
+		}
+	}
+    /* end of side menu */
+
+        /* bookmark float right, question and its components left */
+        p.in { float:left; }
+
+
+        /* top navbar colour */
+        .navbar-default{
+
+            background: #CC3232;
+        }
+
+/* word-cloud CSS */
+ .word-1 {
+ top: 1em;
+ font-size: 20px;
+  font-color:green;
+ text-align: center;
+ color: #626262;
+filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+-webkit-transform: rotate(190deg);
+-ms-transform: rotate(190deg);
+transform: rotate(190deg);
+
+}
+
+ .word-2 {
+ top: 0;
+ left: 1em;
+ font-size: 20px;
+color: #906060;
+text-align: right;
+font-color:yellow;
+filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+-webkit-transform: rotate(150deg);
+-ms-transform: rotate(150deg);
+transform: rotate(150deg);
+
+
+}
+
+.word-3 {
+
+ font-size: 20px;
+    font-color:pink;
+ color: pink;
+-webkit-transform: rotate(-180deg);
+-moz-transform: rotate(-180deg);
+filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+  text-align: center;
+
+}
+ .word-4 {
+ top: 1em;
+ left: 0;
+ font-size: 20px;
+ font-color:blue;
+ color: yellow;
+-webkit-transform: rotate(-200deg);
+-moz-transform: rotate(-200deg);
+filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=4);
+  text-align: center;
+  text-align:left;
+}
+
+ .word-5 {
+ top: 1.5em;
+ right: -0.3em;
+ color: green;
+ font-size: 20px;
+ font-color:orange;
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=5);
+  -webkit-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);
+  transform: rotate(3600deg);
+  text-align: center;
+
+}
+
+ .word-6 {
+ bottom: 0;
+ right: 1em;
+ color: cream;
+ font-size:20px;
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=6);
+  -webkit-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  transform: rotate(270deg);
+  text-align: right;
+
+}
+
+ .word-7 {
+ bottom: 0.6em;
+ left: 0;
+ color: #6e6e6e;
+ font-size: 8px;
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=7);
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+  text-align: left;
+}
+/* end of word cloud CSS */
+
+
+/*check box for read more*/
+.animate-hide {
+  -webkit-transition: all linear 0.5s;
+  transition: all linear 0.5s;
+  line-height: 20px;
+  opacity: 1;
+  padding: 10px;
+  border: 0;
+  background: white;
+}
+
+.animate-hide.ng-hide {
+  line-height: 0;
+  opacity: 0;
+  padding: 0 10px;
+}
+
+.check-element {
+  padding: 10px;
+  border: 0;
+  background: white;
+}
+
+/* checkbox for text text summarizer*/
+input[type=checkbox] + label {
+		display:inline-block;
+		margin:-2px;
+		padding: 4px 12px;
+		margin-bottom: 0;
+		font-size: 10px;
+		line-height: 20px;
+		color: #CC3232;
+		text-align: center;
+		text-shadow: 0 1px 1px rgba(255,255,255,0.75);
+		vertical-align: middle;
+		cursor: pointer;
+		background-color: #f5f5f5;
+		background-image: -moz-linear-gradient(top,#fff,#e6e6e6);
+		background-image: -webkit-gradient(linear,0 0,0 100%,from(#fff),to(#e6e6e6));
+		background-image: -webkit-linear-gradient(top,#fff,#e6e6e6);
+		background-image: -o-linear-gradient(top,#fff,#e6e6e6);
+		background-image: linear-gradient(to bottom,#fff,#e6e6e6);
+		background-repeat: repeat-x;
+		border: 1px solid #ccc;
+		border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+		border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+		border-bottom-color: #b3b3b3;
+		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff',endColorstr='#ffe6e6e6',GradientType=0);
+		filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+		-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+		-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+		box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+	}
+
+	 input[type=checkbox]:checked + label{
+		   background-image: none;
+		outline: 0;
+		-webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
+		-moz-box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
+		box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
+			background-color:#e0e0e0;
+	}
+
+
+input[type=radio], input[type=checkbox] {
+		display:none;
+	}
+/* end of text summarizer */
+
+
+/* popover for review */
+.popover-title {
+  color: white;
+  background-color: #CC3232;
+
+}
+            .form-group input[type="checkbox"] {
+    display: none;
+}
+
+.form-group input[type="checkbox"] + .btn-group > label span {
+    width: 20px;
+}
+
+.form-group input[type="checkbox"] + .btn-group > label span:first-child {
+    display: none;
+}
+.form-group input[type="checkbox"] + .btn-group > label span:last-child {
+    display: inline-block;
+}
+
+.form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
+    display: inline-block;
+}
+.form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
+    display: none;
+}
+</style>
+<!--check box button for text summarizer -->
+<script>
+    $('#radioBtn a').on('click', function(){
+    var sel = $(this).data('title');
+    var tog = $(this).data('toggle');
+    $('#'+tog).prop('value', sel);
+
+    $('a[data-toggle="'+tog+'"]').not('[data-title="'+sel+'"]').removeClass('active').addClass('notActive');
+    $('a[data-toggle="'+tog+'"][data-title="'+sel+'"]').removeClass('notActive').addClass('active');
+})
+</script>
+<!-- angular js for checkbox of text summarizer -->
+<script>
+
+
+it('should check ng-show / ng-hide', function() {
+
+
+  element(by.model('checked')).click();
+
+
+});
+</script>
+
+
+<!-- Js for Add answer -->
+<script>
+    $(document).ready(function(){
+     $(window).scroll(function () {
+            if ($(this).scrollTop() > 50) {
+                $('#back-to-top').fadeIn();
+            } else {
+                $('#back-to-top').fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        $('#back-to-top').click(function () {
+            $('#back-to-top').tooltip('hide');
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+
+        $('#back-to-top').tooltip('show');
+
+});
+</script>
+<!--Js for textarea add answer -->
+
+<!--Editing Question (Angular JS)-->
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<!--check box for full answer-->
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.6/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.6/angular-animate.js"></script>
+
+<!--Popover placement for reviews-->
+<script type="text/javascript">
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover({
+        placement : 'bottom',
+        container: 'body'
+
+
+
+    });
+});
+</script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+<!--Side Menu Script-->
+<script>
+       $(function () {
+
+    $('.navbar-toggler').on('click', function(event) {
+		event.preventDefault();
+		$(this).closest('.navbar-minimal').toggleClass('open');
+	})
+});
+</script>
+
+<!--Post Answer Modal-->
+<script>
+    /*$(document).ready(function() {
+
+
+  $('#showModal').click(function() {
+    //$("#modals").html($("#moderador").val());
+    $('#previa').modal();
+    rescale();
+  });
+
+});*/
+// finding the height of the modal(Add answer)
+function rescale(){
+    var size = {width: $(window).width() , height: $(window).height() }
+    /*CALCULATE SIZE*/
+    var offset = 70;
+    //70
+    var offsetBody = 150;
+    //150
+    $('.modal-content').css('height', size.height - offset );
+    $('.modal-body').css('height', size.height - (offset+offsetBody));
+    $('.form-control-s').css('height', size.height-(250));
+    $('.modal-footer').css('top', 0);
+}
+$(window).bind("resize", rescale);
+
+
+</script>
+<!--Collapse Answer button -->
+<script>
+    $(document).on('click', '.panel-heading span.clickable', function (e) {
+    var $this = $(this);
+    if (!$this.hasClass('panel-collapsed')) {
+        $this.parents('.panel').find('.panel-body').slideUp();
+        $this.parents('.panel').find('.panel-footer').slideUp();
+        $this.addClass('panel-collapsed');
+        $this.find('i').removeClass('glyphicon-minus').addClass('glyphicon-plus');
+    } else {
+        $this.parents('.panel').find('.panel-body').slideDown();
+        $this.parents('.panel').find('.panel-footer').slideDown();
+        $this.removeClass('panel-collapsed');
+        $this.find('i').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+    }
+});
+</script>
+<!--word cloud-->
+
+
+</head>
+
+<body ng-app="ngAnimate">
+
+<!--Side menu inside top navbar-->
+<div class="navbar navbar-default navbar-fixed-top" style="min-height: 60px;" role="navigation">
+<nav class="navbar navbar-fixed-left navbar-minimal animate" role="navigation">
+		<div class="navbar-toggler animate">
+			<span class="menu-icon"></span>
+		</div>
+		<ul class="navbar-menu animate">
+
+			<li id="1">
+				<a href="/tab_1/" class="animate">
+					<span class="desc animate"> Newsfeed </span>
+					<span class="glyphicon glyphicon-list"></span>
+				</a>
+			</li>
+			<li>
+				<a href="/tab_2/" class="animate">
+					<span class="desc animate"> Activities </span>
+					<span class="glyphicon glyphicon-pencil"></span>
+				</a>
+			</li>
+			<li>
+				<a href="/tab2/" class="animate">
+					<span class="desc animate">  Notifications <span class="badge">{{count}}</span> </span>
+					<span class="glyphicon glyphicon-bell"></span>
+				</a>
+			</li>
+            <li>
+				<a href="/tab_4/" class="animate">
+					<span class="desc animate"> Myscore </span>
+					<span class="glyphicon glyphicon-certificate"></span>
+				</a>
+			</li>
+            <li>
+				<a href="/bookmark/" class="animate">
+					<span class="desc animate">Bookmark </span>
+					<span class="glyphicon glyphicon-bookmark"></span>
+				</a>
+			</li>
+		</ul>
+</nav>
+<!--end of side menu-->
+
+    <!--top navbar contents-->
+    <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#" style="color:#FFFFFF;"><b>Newsfeed</b></a>
+            </div>
+             <!--<div class="popover-markup">
+                 <a  class="trigger" href="#" style="color:#FFFFFF;margin-top:15px;float:right;"><span class="glyphicon glyphicon-user"></span>&nbsp;{{full_name|title}}</a>
+                   <div class="content hide">
+
+                                <p>
+                                    <a href="/accounts/login/" style="color:#000000;">Logout</a>
+                                </p>
+
+
+                   </div>
+             </div>--><!-- ./po-markup -->
+         <div class="pull-right" style="margin-top:10px;">
+
+                <ul class="nav pull-right" style="margin-top:1px;">
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color:white;background-color:#CC3232;"><span class="glyphicon glyphicon-user"></span>&nbsp;{{full_name|title}} <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+
+                            <!--<li class="divider"></li>-->
+                            <li><a href="/accounts/register/" style="color:#CC3232;background:#ffffff;"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+         </div>
+         </div>
+
+    </div>
+    <!--end of top navbar contents--->
+</div>
+<!--end of top navbar-->
+
+<!--Q & A textarea-->
+<div class="container">
+    <div class="panel panel-default" style="border-color:#CC3232 ; margin-top:110px" >
+        <div class="panel-heading"></div>
+
+        <form method="GET" action="/log/"> {% csrf_token %}
+        <div class="panel-body">
+              <textarea class="form-control" maxlength="1000" placeholder="Post Question" wrap="hard" name="ques" id="t" cols="80" rows="2" style="border:0;box-shadow:none;overflow:hidden;font-family: Ubuntu; margin-top:1px; display:inline-block;
+  vertical-align:middle;outline:none;"  required>{{anystring}}</textarea></div>
+            <div class="panel-footer" style="background-color:#CC3232;height:55px;">
+            <p class="pull-right">
+                <input type = "text"
+                 id = "topic" placeholder="Topic"
+                  style="font-family: Ubuntu;border: 1px solid #CC3232;-moz-border-radius: 5px;
+ border-radius: 5px;padding:5px;" name="topic" required>
+
+              <select style="height:auto;" class="selectpicker" data-width="110px" data-style="btn-default"  id ="myselect" name="access"  single="single" required aria-required="true">
+                  <option value="public"> Public</option>
+                  <option value="interest">Interested</option>
+
+              </select>
+              <input name="Post" type="submit" value="Post" class="btn btn-default" style="width:80px; height:auto;"/>
+
+           </p>
+         </div>
+       </div>
+
+    </form>
+</div>
+</div>
+<!--end of Question-->
+
+
+
+<!--fieldset (qa) surrounding the q & a-->
+<fieldset class="qa">
+
+  {% if books_list and uid %}
+     {% for b in books_list %}
+          {% if b.access == "interest" and b.topic in myqlist or b.uid_id in fol_list.tracking or b.uid_id == uid or b.qid in af or uid in b.tracked_by or b.qid in an_list or b.topic in interest or b.access == "public" %}
+               <!---Q & A Panel. Title= Question.Header= Tags, topic etc. Body=Answer-->
+               <div class="container">
+
+                    <div class="panel panel-default" style="border:0 ; margin-top:30px">
+                          <div class="panel-heading">
+                          <!--start of bookmark and RAL for Question-->
+
+<a data-toggle="popover" style="color:white;background-color:#CC3232;float:right;" title="Bookmark/RAL" data-html="true"  data-content="
+<p>
+                                     <form action='/accounts/bookmarkq/{{b.qid}}/' method='get'>
+                                <input type='text' id ='label' name='label' style='color:#CC3232;border-color:#CC3232;border-style: solid;' placeholder='Enter label' class='form-control'/>
+                                <input type='submit' value='submit' style='color:#000000;display:none;' onclick='this.form.submit();return false;'/></form></p>
+
+                               <!--RAL-->
+
+                        <p style='text-align:center'><a href='/downloadq/{{b.qid}}/' style='color:#CC3232;background:#ffffff;text-align:center;' title='Download Question and Answer'><span class='glyphicon glyphicon-floppy-save'></span></a> </p>
+
+"><span class="glyphicon glyphicon-bookmark"></span></a>
+
+<!--<a data-toggle="popover" href="/word_cloud/{{b.qid}}/" class="pull-right" style="color:white;background-color:#CC3232;" title="Word cloud"  data-html="true" data-color="black" data-content="
+
+
+                          "><span class="glyphicon glyphicon-cloud"></span></a>
+                        <a data-toggle="popover" class="pull-right" style="color:white;background-color:#CC3232;" title="Word cloud"  data-html="true" data-color="black" data-content="
+                           {% for u,v in counts %}
+                              <div class='word-{{v}}'>{{u}}</div>
+                           {% endfor %}
+
+                          "><span class="glyphicon glyphicon-cloud"></span></a>-->
+
+
+
+
+
+
+                                 <p class="in"><h4 style="color:#FFFFFF;font-family: Ubuntu;" > <b>{{b.question}}</b></h4>
+                                                       <!--Suggest Question-->
+                                                         <!--end of suggest Question-->
+
+
+
+
+                              </p>
+
+
+
+
+
+
+                                            <p class="in" style="font-family: Ubuntu;">&nbsp;&nbsp;
+                                                <!--start of review Question-->
+                             {% for k in revq %}
+                                  {% if b.qid == k.qid_id and b.uid_id != ra_no and b.qid == k.qid_id  %}
+                                    <a data-toggle="popover"  style="color:white;background-color:#CC3232;" title="Question comment" data-html="true" data-color="black" data-content="
+
+
+
+                                      <form class='form-horizontal' method= 'get 'action='/accounts/reviewq/{{b.qid}}/'>{% csrf_token %}
+                                            <input name='review1' type='text' class='form-control' style='font-family: Ubuntu; color:#CC3232;;border-color:#CC3232;' placeholder='Review Question'/>
+                                            <input name='review' type='submit' value='review' style='font-family: Ubuntu;display:none; colour: #000000;'  onclick='this.disabled=true,this.form.submit();'/>
+                                      </form>"><span class="glyphicon glyphicon-comment"></span></a>
+
+                                  {% endif %}
+                             {% endfor %}<!--end of review Question-->
+                                                &nbsp;&nbsp;&nbsp;
+                                                 <!--link for suggest Question-->
+
+<!--<a href="#" onclick="$('#{{b.qid}}').modal('show');return false;" style="font-family: Ubuntu;color:#ffffff;"><span class="glyphicon glyphicon-pencil"></span> </a>-->
+                                                {% if ra_no == b.uid_id %}
+
+                                                {% else %}
+
+                                                    <a data-toggle="popover"  style="color:white;background-color:#CC3232;"  title="Suggest Question" data-html="true" data-color="black" data-content="
+
+
+
+                                      <form class='form-horizontal' method= 'get 'action='/edit_squestion/{{b.qid}}/'>{% csrf_token %}
+                                            <textarea placeholder='Edit Question.....'  id='suggest_question' name='suggest_question' class='form-control-s' style='width: 100%;height:100%;color:#CC3232;border:0;outline:none;' required></textarea>
+                                            <input name='suggestq' class='btn btn-danger' type='submit' value='Suggest Question' style='font-family: Ubuntu; colour: #000000;float:right;'  onclick='this.disabled=true,this.form.submit();'/>
+                                      </form>"><span class="glyphicon glyphicon-pencil"></span></a>&nbsp;
+                                                {% endif %}
+                                              <!--display of topics, tags, follow question, rates , timestamp-->
+                                                <span title="Topic">&#35; </span>&nbsp;{{b.topic}} &nbsp;&nbsp; <span class="glyphicon glyphicon-tags" title="Tags"></span>&nbsp;&nbsp;{{b.tag}} &nbsp;&nbsp;
+                                                    {% if avg1 %}
+                                                        {% for z in avg1 %}
+                                                            {% if b.qid == z.qid_id and ra_no in z.uid or b.qid == z.qid_id and ra_no == b.uid_id %}
+                                                                     <span class="glyphicon glyphicon-star" title="Rating of this Question"></span>  {{z.avg_rating}}
+                                                                      &nbsp;&nbsp;<span class="glyphicon glyphicon-user" title="Rating of this Question"></span>{{z.uid|length}}                                                            
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    {% endif %}
+
+                                                     &nbsp; &nbsp;<form action="/log1/{{b.qid}}/" method="GET"> {% csrf_token %}
+                                                     <!--<input name="follow" type="submit" value="follow" style="font-family: Ubuntu;" class="btn btn-default" onclick="this.disabled=true,this.form.submit();"/>-->
+                                                     <a href="/log1/{{b.qid}}/" onclick="this.disabled=true,this.form.submit();" value="follow" style="font-family: Ubuntu;color:white;" title="Follow Question" name="followq"><span class="glyphicon glyphicon-record"></span>&nbsp;&nbsp;Follow Question</a>
+                                                    &nbsp;&nbsp;<span class="glyphicon glyphicon-time" style=" white-space: nowrap;"> </span>&nbsp;{{b.timestamp}}</form>
+
+                                                    <!--<a href="word_cloud/{{b.qid}}" onclick="" style="color:white;">word Cloud</a>-->
+
+                                               </p>
+
+
+
+
+                                             <!--Rate Question-->
+                                            <form action="/quest/rate_question/{{b.qid}}/" method="GET"> {% csrf_token %}
+                                                <select name="rateq" class="selectpicker show-menu-arrow" single="single" data-style="btn-default" data-width="70px"  title="Rate Question" style="background-color:#FFFFFF;color:#CC3232;" onchange="this.form.submit();return false;">
+                                                    <option label = "" selected disabled>Rate</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                    <option value="6">6</option>
+                                                    <option value="7">7</option>
+                                                    <option value="8">8</option>
+                                                    <option value="9">9</option>
+                                                    <option value="10">10</option>
+                                                </select>
+
+                                            </form>
+
+
+                                        <!---Add Answer(modal)-->
+
+
+
+                                     {% if ra_no == b.uid_id %}
+
+                                     {% else %}
+                                        <a href="#" onclick="$('#{{b.qid}}').modal('show');rescale();return false;" style="font-family: Ubuntu;color:#FFFFFF" value="Add Your Answer">Add your Answer</a>
+                                     {% endif %}
+                                         <span class="pull-right clickable"><i class="glyphicon glyphicon-minus"></i></span>
+
+                                            <div class="container">
+                                                <div id={{b.qid}} class="modal fade" style="backdrop:true;"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                     <div class="modal-dialog" style="margin-left:200px;width:900px;">
+                                                           <div class="modal-content">
+                                                                <div class="modal-header" style="background-color:#CC3232;color:#FFFFFF;">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:#ffffff;"><b>X</b></button>
+                                                                    <h3 id="myModalLabel" style="color:#FFFFF;">{{b.question}}</h3>
+
+
+                                                                </div>
+                                                                <div class="modal-body" id="modals">
+                                                                         <form method="get" action="/post_answer/{{b.qid}}/" id="addanswer" >{% csrf_token %}
+
+
+
+
+
+                                                                            <textarea placeholder="Write your Answer....."  id="textbox" name="textbox" class="form-control-s" style="width: 100%;color:#000000;border:0;outline:none;" required></textarea>
+
+
+
+
+                                                               <!--</form>--->
+                                                               <!--<div class="modal-footer" style="background-color:#CC3232;">-->
+
+
+                                                                 <input name="submitanswer" onclick="this.form.submit();" type="submit" value="Post Answer" data-dismiss="modal" id="submitanswer" style="color:#ffffff;"  class="btn btn-danger pull-right" required/>
+                                                                   <!--</div>-->
+                                                                  </form>
+                                                                    </div>
+
+
+
+
+
+
+                                                            </div>
+                                                     </div>
+                                                </div>
+                                            </div>
+
+                                        <!---end of Add Answer(modal)-->
+
+                          </div>
+                                  {% if ans_list %}
+                                     {% for y in ans_list %}
+                                         {% if b.qid == y.qid_id  %}
+                                                <div class="panel-body">
+        <!--Suggest Answer-->
+                                                    {% if ra_no == y.uid_id %}
+
+                                                    {% else %}
+                                                        <a href="#" onclick="$('#{{y.aid}}').modal('show');return false;" style="font-family: Ubuntu;float:right;color:#CC3232;"><span class="glyphicon glyphicon-pencil"></span> </a>&nbsp;&nbsp;
+                                                    {% endif %}
+                                               <div class="container">
+                                                <div id={{y.aid}} class="modal fade" style="backdrop:true;"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                     <div class="modal-dialog" style="margin-left:200px;width:900px;height:900px;">
+                                                           <div class="modal-content">
+                                                                <div class="modal-header" style="background-color:#CC3232;color:#FFFFFF;">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:#ffffff;"><b>X</b></button>
+                                                                    <h3 id="myModalLabel" style="color:#FFFFF;">{{y.answer}}</h3>
+
+
+                                                                </div>
+                                                                <div class="modal-body" id="modals">
+                                                                         <form method="get" action="/edit_sanswer/{{y.aid}}/" id="editans">{% csrf_token %}
+
+
+
+
+
+                                                                            <textarea placeholder="Write your Answer....."  id="edit_answer" name="edit_answer" class="form-control-s" style="width: 100%;color:#000000;border:0;outline:none;overflow:hidden;" required></textarea>
+
+
+
+
+
+
+
+
+                                                               <!--<div class="modal-footer" style="background-color:#CC3232;">-->
+
+
+                                                                 <input name="editanswer" onclick="this.form.submit();" type="submit" value="Edit Answer" data-dismiss="modal" id="editanswer" style="color:#ffffff;"  class="btn btn-danger pull-right" required/>
+                                                                   <!--</div>-->
+                                                               </form></div>
+
+
+
+
+
+
+                                                            </div>
+                                                     </div></div></div><!--end of modal popup for edit Answer-->
+                                                           <!--Text Summarizer-->
+                                                            {% if y.answer|wordcount > 300 %}
+
+
+                                                                   <div>
+
+                                                                        <div class="check-element animate-hide" ng-show="checked">
+                                                                           <p>Full Answer</p>
+                                                                            {{y.answer|linebreaks}}
+                                                                        </div>
+                                                                   </div>
+                                                                   <div>
+
+                                                                        <div class="check-element animate-hide" ng-hide="checked">
+
+                                                                            <p>Summarized Answer</p>
+                                                                            {{y.answer_summary|linebreaks}}
+                                                                        </div>
+                                                                   </div>
+                                                                   <p>
+
+
+
+                                                                       <!--<input type="checkbox" id="chk1" name="chk" value="all" ng-model="checked">
+                                                                            <label for="chk1" title="Read more"><span class="glyphicon glyphicon-folder-open"></span></label>-->
+
+                                                                        <div class="[ form-group ]">
+            <input type="checkbox" name="fancy-checkbox-danger-custom-icons" id="fancy-checkbox-danger-custom-icons" autocomplete="off" ng-model="checked" />
+            <div class="[ btn-group ]">
+                <label for="fancy-checkbox-danger-custom-icons" class="[ btn btn-danger ]">
+                    <span class="[ glyphicon glyphicon-minus ]" role="button" style="width:180px;">&nbsp;Read Short Answer</span>
+                    <span class="[ glyphicon glyphicon-plus ]" role="button" style="width:180px;">&nbsp;Read Full Answer</span>
+                </label>
+                <!--<label for="fancy-checkbox-danger-custom-icons" id="bn" class="[ btn btn-default active]">
+                    Read Full Answer
+
+                </label>-->
+
+            </div>
+        </div>
+
+
+                                                                   </p>
+
+
+                                                            {% else %}
+
+                                                                   <p style="font-family: Ubuntu;">{{y.answer|linebreaks}}</p>
+                                                            {% endif %}<!--End of text summarizer-->
+                                                            <!--rate Answer-->
+                                                           <form action="/post_answer/rate_answer/{{y.aid}}/" method="GET"> {% csrf_token %}
+                                                                <select name="rate" class="selectpicker show-menu-arrow" single="single" data-width="70px" title="Rate Question" style="background-color:#FFFFFF;color:#CC3232;" onchange="this.form.submit();">
+                                                                    <option label = "" selected disabled>Rate</option>
+                                                                    <option value="1">1</option>
+                                                                    <option value="2">2</option>
+                                                                    <option value="3">3</option>
+                                                                    <option value="4">4</option>
+                                                                    <option value="5">5</option>
+                                                                    <option value="6">6</option>
+                                                                    <option value="7">7</option>
+                                                                    <option value="8">8</option>
+                                                                    <option value="9">9</option>
+                                                                    <option value="10">10</option>
+                                                                </select>
+
+                                                            </form><!--end of rate answer-->
+                                                </div> <!--end of panel body-->
+                                                        <!--Read At Leisure-->
+                                                <div class="panel-footer" style="background-color: #CC3232;height:40px;">
+
+                                                    <a data-toggle="popover" style="color:white;background-color:#CC3232;float:right;" title="Bookmark/RAL" data-html="true"  data-content="
+<p>
+                                     <form action='/accounts/bookmarka/{{y.aid}}/' method='get'>
+                                <input type='text' id ='labela' name='labela' style='color:#CC3232;border-color:#CC3232;border-style: solid;' placeholder='Enter label' class='form-control'/>
+                                <input type='submit' value='submit' style='color:#000000;display:none;' onclick='this.form.submit();return false;'/></form></p>
+
+                        <p style='text-align:center'><a href='/download/{{y.aid}}/' style='color:#CC3232;background:#ffffff;text-align:center;' title='Download Answer'><span class='glyphicon glyphicon-floppy-save'></span></a>
+</p>
+"><span class="glyphicon glyphicon-bookmark"></span></a>
+                                                    <p class="in"><!--Answer Review-->
+                                                         {% for k in reva %}
+                                  {% if y.aid == k.aid_id and y.uid_id != ra_no and y.aid == k.aid_id %}
+                                    <a data-toggle="popover" style="color:white;background-color:#CC3232;" title="Answer Comment" data-html="true"  data-content="
+                                      <form action='/accounts/reviewa/{{y.aid}}/' method='GET' class='form-horizontal'> {% csrf_token %}
+                                            <input name='review2' type='text' class='form-control' style='font-family: Ubuntu; color:#CC3232;border-color:#CC3232;' placeholder='Review Answer'/>
+                                            <input name='review' type='submit' class='btn btn-danger' value='review' style='font-family: Ubuntu; display:none;colour: #000000;'  onclick='this.disabled=true,this.form.submit();return false;'/>
+                                      </form>"> <span class="glyphicon glyphicon-comment"></span></a>
+                                  {% endif %}
+                                {% endfor %}
+                                                    </p><!--end of Answer review-->
+
+                                                    <!--start of ratings, timestamp for answer-->
+                                                    <p class="in" style="font-family: Ubuntu; color: #FFFFFF;"> &nbsp;&nbsp;
+
+
+
+                                                        {% if avg %}
+                                                          {% for z in avg %}
+                                                                 {% if y.aid == z.aid_id and ra_no in z.uid or y.aid == z.aid_id and ra_no == y.uid_id %}
+                                                                       <span class="glyphicon glyphicon-star" title="Rating of this Answer"></span>&nbsp;{{z.avg_rating}}
+                                                                       &nbsp;&nbsp;<span class="glyphicon glyphicon-user" title="Rating of this Question"></span>&nbsp;{{z.uid|length}}                                                            
+                                                                {% endif %}
+                                                          {% endfor %}
+                                                        {% endif %}&nbsp; &nbsp;<span class="glyphicon glyphicon-time" style=" white-space: nowrap;color:white;"> </span>&nbsp;{{y.timestamp}}
+                                                    </p><!--end of ratings, time for answer-->
+                                                    </div><!--</div> ending of panel footer-->
+
+
+                                         {% endif %}
+                                     {% endfor %}
+                                  {% endif %}
+
+                    </div><!--</div> ending of panel -->
+
+               </div><!--end of container-->
+
+          {% endif %}
+
+     {% endfor %}
+
+  {% endif %}
+
+
+<!--<a data-toggle="popover" href="" class="pull-right" style="color:white;background-color:#CC3232;" title="Word cloud"  data-html="true" data-color="black" data-content="
+                           {% for u,v in counts %}
+                              <div class='word-{{v}}'>{{u}}</div>
+                           {% endfor %}
+
+                          "><span class="glyphicon glyphicon-cloud"></span></a>-->
+
+
+
+
+</fieldset> <!-- qa </fieldset>-->
+
+
+<!--stay where you were-->
+<script type="text/javascript" src="/js/maintainscroll.jquery.min.js"></script>
+
+</body>
+{% endblock %}
+

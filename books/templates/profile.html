@@ -1,0 +1,273 @@
+{% extends "base.html" %}
+  {% block content %}
+     <!--load staticfiles is used to load static images/jquery code etc-->
+     {% load staticfiles %}
+        <!--Top most bar=pagination-->
+            <head xmlns="http://www.w3.org/1999/html">
+                <table bgcolor="#B0B0B0" cellpadding="100" cellspacing="15">
+                        <tr>
+                                <!--Name-->
+                                        <td class='left' style="color:#505050 ;">{{full_name}}'S Profile </td>
+                                <!--logout-->
+
+                                <td class='right'><a href="/accounts/login/" style="color:#505050 ;text-decoration: none;"> <img src="/static/img/logout.jpg" title="Logout" style="height:30px;width:30px;"> </a></td>
+
+                        </tr>
+                </table>
+
+            <!--CSS-->
+            <style type="text/css">
+                    /* post question button CSS */
+                            .post_button {
+                                    border-top: 1px solid #bac0c4;
+                                    background: #b1bbc2;
+                                    background: -webkit-gradient(linear, left top, left bottom, from(#43474a), to(#b1bbc2));
+                                    background: -webkit-linear-gradient(top, #43474a, #b1bbc2);
+                                    background: -moz-linear-gradient(top, #43474a, #b1bbc2);
+                                    background: -ms-linear-gradient(top, #43474a, #b1bbc2);
+                                    background: -o-linear-gradient(top, #43474a, #b1bbc2);
+                                    padding: 4.5px 9px;
+                                    -webkit-border-radius: 8px;
+                                    -moz-border-radius: 8px;
+                                    border-radius: 8px;
+                                    -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+                                    -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+                                    box-shadow: rgba(0,0,0,1) 0 1px 0;
+                                    text-shadow: rgba(0,0,0,.4) 0 1px 0;
+                                    color: white;
+                                    font-size: 13px;
+                                    font-family: Ubuntu;
+                                    text-decoration: none;
+                                    vertical-align: middle;
+                            }
+                            .post_button:hover {
+                                    border-top-color: #bbbebf;
+                                    background: #bbbebf;
+                                    color: #454145;
+                            }
+                            .post_button:active {
+                                    border-top-color: #4f5254;
+                                    background: #4f5254;
+                            }
+
+                            /* select - option CSS */
+                            select {
+                                padding:0px;
+                                margin: 0;
+                                -webkit-border-radius:4px;
+                                -moz-border-radius:4px;
+                                border-radius:4px;
+                                -webkit-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+                                -moz-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+                                box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+                                background: #f8f8f8;
+                                color:#888;
+                                border:none;
+                                outline:none;
+                                display: inline-block;
+                                -webkit-appearance:none;
+                                -moz-appearance:none;
+                                appearance:none;
+                                cursor:pointer;
+                                font-family: Ubuntu;
+                            }
+
+                            /* a href link CSS */
+                            a:link {
+                                    text-decoration: none;
+
+                            }
+
+                            a:visited {
+                                text-decoration: none;
+                            }
+
+                            a:hover {
+                                text-decoration: none;
+                            }
+
+                            a:active {
+                                    text-decoration: none;
+                            }
+
+                            /* CSS for tables */
+                            table{
+                                    width: 100%;
+
+                            /*this is the size of the small text's baseline over part  (≈25px*3/4)*/
+                                line-height: 19.5px;
+                            }
+                            table td{
+                                    vertical-align: baseline;
+                            }
+
+                            /* CSS for td in tables */
+                            .left{
+                                    font-family: Ubuntu;
+                                    font-size: 25px;
+                                    text-align: left;
+                                    font-weight:bold;
+                                    background:#B0B0B0;
+
+                            }
+                            .right{
+                                    font-family: Ubuntu;
+                                    font-size: 25px;
+                                    text-align: right;
+                                    font-weight:bold;
+                                    background:#B0B0B0;
+                            }
+                            *{
+                                    padding: 0;
+                                    margin:0;
+                            }
+
+                            /* textarea CSS */
+                            .wrapper{
+                                    background: #B0B0B0;
+                                    border: none;
+                                    width: 900px;
+                            }
+                            .wrapper textarea{
+                                    border:border: 2px solid #eee;
+                                    width:104%;
+                                    -moz-box-sizing: border-box;
+                                    box-sizing: border-box;
+                                    border-bottom: 1px solid #999;
+                                    font-family: Ubuntu;
+                                    resize: both;
+                            }
+                            .wrapper textarea:focus{
+                                    outline: none;
+                            }
+                            .controls{
+                                    text-align: right;
+                                    margin-top: -6px;
+                            }
+
+                            /* button CSS */
+                            button{
+                                    background: linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
+                                    border: 1px solid #999;
+                                    padding: 10px 25px;
+                                    font-weight: bold;
+                                    color: rgb(77,77,77);
+                                    border-width: 1px 0 0 1px;
+                            }
+
+                            /* fieldset CSS */
+                            legend {
+                                    display: block;
+                                    margin-left: 3px;
+                                    padding-top: 10px;
+                                    text-shadow: 2px 2px 3px rgba(150, 150, 150, 0.75);
+                                    font-family: Ubuntu;
+                                    font-size:.9em;
+                            }
+                            .border {
+                                    border: 2px solid #B6B6B4;
+                                    -webkit-border-radius: 10px;
+                                    -moz-border-radius: 10px;
+                                    border-radius: 10px;
+                                    -webkit-box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.75);
+                                    -moz-box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.75);
+                                    box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.75);
+                            }
+                            .a{
+                                    border: none;
+                                    padding: 35px;
+                                    background: #B0B0B0;
+                                    padding-left: 180px;
+                                    margin: 0 auto;
+                                    font-family: Ubuntu;
+                            }
+
+                            /* Q & A CSS */
+
+                            .ui{
+                                background:#f1f1f1; width:55%;height: auto;padding-left:40px; padding-top:20px; margin:0 auto;
+
+                            }
+
+                            /* fieldset surrounding the q & a */
+                            .qa {
+                                border:0px; padding:20px; margin:0px;
+                                background: #B0B0B0 ;height:auto;
+                                }
+
+
+                            .pagination {
+                                    display: block;
+                                    padding-left: 0;
+                                    background:#f1f1f1;
+
+                            }
+                            .pagination > li {
+                                    display: block;
+
+                            }
+                            .pagination > li > a,
+                            .pagination > li > span {
+                                    position: relative;
+                                    float: left ;
+                                    padding: 6px 12px;
+                                    width:22.95%;
+                                    margin:0 auto;
+                                    line-height: 1.42857143;
+                                    text-decoration: none;
+                                    color: #B0B0B0;
+                                    background-color: #f1f1f1;
+                                    border: 1.5px solid #dddddd;
+                                    text-align:center;
+
+                            }
+                            .pagination > li:first-child > a,
+                            .pagination > li:first-child > span {
+                                        margin-left:0px;
+                            }
+                            .pagination > li:last-child > a,
+                            .pagination > li:last-child > span {
+                                        margin-right:0px;
+                            }
+                            .pagination > li > a:hover,
+                            .pagination > li > span:hover,
+                            .pagination > li > a:focus,
+                            .pagination > li > span:focus {
+                                        color: #f1f1f1 ;
+                                        background-color: #f1f1f1;
+                                        border-bottom-style: solid;
+                                        border-bottom-color: #505050 ;
+                            }
+                            .pagination > .active > a,
+                            .pagination > .active > span,
+                            .pagination > .active > a,
+                            .pagination > .active > span:hover,
+                            .pagination > .active > a:focus,
+                            .pagination > .active > span:focus {
+                            z-index: 2;
+                            color: #f1f1f1 ;
+                            background-color: #f1f1f1;
+                            border-color: #505050;
+                            cursor: default;
+                    }
+
+            </style>
+
+
+   </head>
+   <body>
+<ul class="pagination" >
+  <li  id="1"><a href="/tab_1/" style="font-family:Ubuntu; color:#505050;" >Newsfeed</a></li>
+  <li  id="2"><a href="/tab_2/" style="font-family:Ubuntu;  color:#505050;" >Activities</a></li>
+  <li  id="3"><a href="/tab2/" style="font-family:Ubuntu;  color:#505050;">Notifications</a></li>
+  <li  id="4"><a href="/tab_4/" style="font-family:Ubuntu; color:#505050; " >My Score</a></li>
+
+
+</ul>
+    <h2> Book mark's </h2>
+    {% for x in book_list %}
+      <p><a href="/bookmark/{{x}}/">{{x}}</a></p>
+    {% endfor %}
+   </body>
+
+{% endblock %}
