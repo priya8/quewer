@@ -6,4 +6,4 @@ But, had great fun developing it with no experience back then. It was entirely b
 
 If you have any doubts in any parts, you can contact me at kruthika.vishwa@gmail.com
 
-You can also find the screenshots of the product here  : https://drive.google.com/open?id=0B1Tz4Q87zKbJSXRpRDF1QXlGbGc 
+You can also find the screenshots of the product here  : https://drive.google.com/open?id=0B5pv-vMHuqK7eERNbHZ1TFFwNFU
